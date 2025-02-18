@@ -61,6 +61,9 @@ class _RootPageState extends State<RootPage> {
         body: pages[currentPage],
         bottomNavigationBar: NavigationBar(destinations: [
           NavigationDestination(icon: Icon(Icons.home), label:'home',),
+          NavigationDestination(icon: Icon(Icons.search), label: 'search'),
+          NavigationDestination(icon: Icon(Icons.add), label: 'post'),
+          NavigationDestination(icon: Icon(Icons.mail), label: 'inbox'),
           NavigationDestination(icon: Icon(Icons.person), label: 'profile',)
         ],
         onDestinationSelected: (int index){
