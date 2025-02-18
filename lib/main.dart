@@ -7,22 +7,6 @@ import 'package:flutter_application_4/profile.dart';
 import 'package:flutter_application_4/search.dart';
 
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:RootPage()
-      );
-  }
-}
-
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
 
@@ -37,7 +21,7 @@ class _RootPageState extends State<RootPage> {
     SearchPage(),
     PostPage(),
     InboxPage(),
-    LoginPage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
