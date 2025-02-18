@@ -37,7 +37,7 @@ class _RootPageState extends State<RootPage> {
     SearchPage(),
     PostPage(),
     InboxPage(),
-    ProfilePage(),
+    LoginPage(),
   ];
   @override
   Widget build(BuildContext context) {

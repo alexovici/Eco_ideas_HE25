@@ -22,13 +22,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.yellow,
       ),
-      body: Column(
-        children: [
-          FloatingActionButton(onPressed: (){
-            print('Postare anunt');
-          }, child: Icon(Icons.add),)
-        ],
-      ),
     );
   }
 }
