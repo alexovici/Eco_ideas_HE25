@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/home.dart';
+import 'package:flutter_application_4/inbox.dart';
 import 'package:flutter_application_4/info.dart';
+import 'package:flutter_application_4/post.dart';
 import 'package:flutter_application_4/profile.dart';
+import 'package:flutter_application_4/search.dart';
 
 
 void main() {
@@ -29,8 +32,11 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
-  List<Widget> pages = const [
+  List<Widget> pages = [
     HomePage(),
+    SearchPage(),
+    PostPage(),
+    InboxPage(),
     ProfilePage(),
   ];
   @override
