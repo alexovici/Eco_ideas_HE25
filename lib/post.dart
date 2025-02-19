@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PostPage(),
+    );
+  }
+}
 
 class PostPage extends StatefulWidget {
   const PostPage({super.key});
@@ -15,6 +32,37 @@ class _PostPageState extends State<PostPage> {
   final locationController = TextEditingController();
   String? selectedPayPeriod;
   String? selectedWorkPeriod;
+
+  final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
+
+  void uploadJobDetails() {
+    String title = titleController.text;
+    String description = descriptionController.text;
+    String pay = payController.text;
+    String duration = durationController.text;
+    String location = locationController.text;
+    String payPeriod = selectedPayPeriod ?? '';
+    String workPeriod = selectedWorkPeriod ?? '';
+
+    Map<String, dynamic> jobDetails = {
+      'description': description,
+      'pay': pay,
+      'duration': duration,
+      'location': location,
+      'payPeriod': payPeriod,
+      'workPeriod': workPeriod,
+    };
+
+    databaseReference.child(title).set(jobDetails).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Job posted successfully!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to post job: $error')),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +236,7 @@ class _PostPageState extends State<PostPage> {
                             );
                             return;
                           } else {
-                            // Post the job
+                            uploadJobDetails();
                           }
                         },
                         style: ElevatedButton.styleFrom(
