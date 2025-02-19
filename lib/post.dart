@@ -8,131 +8,151 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final payController = TextEditingController();
+  final durationController = TextEditingController();
   final locationController = TextEditingController();
   String? selectedPayPeriod;
+  String? selectedWorkPeriod;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: null,
+        title: Text('Post a Job',
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 22.0,
+          fontWeight: FontWeight.bold,
+        ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(
-                hintText: 'Title', // Changed from hintText to labelText
-                border: OutlineInputBorder(),
-              )
-            ),
-            SizedBox(height: 16.0), // Add some spacing between the fields
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200.0, // Set the desired height
-              child: TextField(
-                controller: descriptionController,
-                maxLines: null, // Allow multiple lines
-                expands: true, // Expand to fill the container
-                textAlignVertical: TextAlignVertical.top, // Align text to the top
-                decoration: InputDecoration(
-                  hintText: 'Description of the job', // Changed from hintText to labelText
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide()
-                  ),
-                ),
-              )
-            ),
-            SizedBox(height: 16.0), // Add some spacing between the fields
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: payController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: 'Duration',
-                      border: OutlineInputBorder(),
+            Card(
+              elevation: 5.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 16.0), // Add some spacing between the fields
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'Period',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 16.0),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 200.0,
+                      child: TextField(
+                        controller: descriptionController,
+                        maxLines: null,
+                        expands: true,
+                        textAlignVertical: TextAlignVertical.top,
+                        decoration: InputDecoration(
+                          labelText: 'Description of the job',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
                     ),
-                    value: selectedPayPeriod,
-                    items: ['hour', 'day', 'week', 'month'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedPayPeriod = newValue;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0), // Add some spacing between the fields
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: payController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: 'Pay Amount',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 16.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: durationController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: 'Duration',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Period',
+                              border: OutlineInputBorder(),
+                            ),
+                            value: selectedWorkPeriod,
+                            items: ['hour', 'day', 'week', 'month'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedPayPeriod = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                SizedBox(width: 16.0), // Add some spacing between the fields
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'Pay Period',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 16.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: payController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: 'Pay Amount',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Pay Period',
+                              border: OutlineInputBorder(),
+                            ),
+                            value: selectedPayPeriod,
+                            items: ['hour', 'day', 'week', 'month'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedPayPeriod = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    value: selectedPayPeriod,
-                    items: ['hour', 'day', 'week', 'month'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedPayPeriod = newValue;
-                      });
-                    },
-                  ),
-                ),
-              ],
-              ),
-                SizedBox(height: 16.0), // Add some spacing between the fields
-                TextField(
-                  controller: locationController,
-                  decoration: InputDecoration(
-                    hintText: 'Location',
-                    border: OutlineInputBorder(),
-        
-                  )
-                ),
-                SizedBox(height: 16.0),
-                Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                          if (titleController.text.isEmpty || descriptionController.text.isEmpty || payController.text.isEmpty || locationController.text.isEmpty) 
-                          {
+                    SizedBox(height: 16.0),
+                    TextField(
+                      controller: locationController,
+                      decoration: InputDecoration(
+                        labelText: 'Location',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (titleController.text.isEmpty ||
+                              descriptionController.text.isEmpty ||
+                              payController.text.isEmpty ||
+                              locationController.text.isEmpty) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -151,18 +171,20 @@ class _PostPageState extends State<PostPage> {
                               },
                             );
                             return;
-                          }
-                          else
-                          {
+                          } else {
                             // Post the job
                           }
-                      },
-                      child: Text("Post Job"),
-                    )
-                  )
-              ],
+                        },
+                        child: Text("Post Job"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
