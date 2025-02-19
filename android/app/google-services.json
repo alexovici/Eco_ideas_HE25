@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "881251314312",
+    "firebase_url": "https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "muncitor-pe-loc",
+    "storage_bucket": "muncitor-pe-loc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881251314312:android:cb945acc07fd5cc423cd3d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881251314312-hlmf65e4nomljph8m4c9jmnn3scfd1rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0kVDxftR2ZoBRVeVBqIA0_Jv8OxsWcJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881251314312-hlmf65e4nomljph8m4c9jmnn3scfd1rd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881251314312-6otnh79c8ded6dvr9q5sl38ds1jt7m8s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication4"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

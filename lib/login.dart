@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/home.dart';
 import 'package:flutter_application_4/main.dart';
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:LoginPage()
-      );
+      home: LoginPage(),
+    );
   }
 }
 
@@ -28,18 +29,30 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  void _login() {
-    final String username = _usernameController.text;
+  bool loggedin = false;
+
+  void _login() async {
+    final String email = _usernameController.text;
     final String password = _passwordController.text;
 
-    // Perform login logic here
-    print('Username: $username');
-    print('Password: $password');
-    setState(() {
-      loggedin = true;
-    });
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      setState(() {
+        loggedin = true;
+      });
+      print('Logged in successfully');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided.');
+      }
+    }
   }
-   bool loggedin = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -72,20 +85,20 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: _login,
               child: Text('Login'),
             ),
-        if(loggedin)
-        Column(
-          children: [
-            Text('Logged in successfully'),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                  return RootPage();
-                }));
-              },
-              child: Text('Continue'),
-            ),
-          ],
-        )
+            if (loggedin)
+              Column(
+                children: [
+                  Text('Logged in successfully'),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                        return HomePage();
+                      }));
+                    },
+                    child: Text('Continue'),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
