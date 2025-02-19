@@ -21,12 +21,13 @@ class _PostPageState extends State<PostPage> {
     return Scaffold(
       appBar: AppBar(
         leading: null,
-        title: Text('Post a Job',
-        style: TextStyle(
-          fontFamily: 'Poppins',
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold,
-        ),
+        title: Text(
+          'Post a Job',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontSize: 22.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -39,6 +40,7 @@ class _PostPageState extends State<PostPage> {
             Card(
               elevation: 5.0,
               margin: EdgeInsets.symmetric(vertical: 10.0),
+              color: Colors.grey.shade200,
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
@@ -48,6 +50,8 @@ class _PostPageState extends State<PostPage> {
                       decoration: InputDecoration(
                         labelText: 'Title',
                         border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.white,
                       ),
                     ),
                     SizedBox(height: 16.0),
@@ -62,6 +66,8 @@ class _PostPageState extends State<PostPage> {
                         decoration: InputDecoration(
                           labelText: 'Description of the job',
                           border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
                       ),
                     ),
@@ -75,6 +81,8 @@ class _PostPageState extends State<PostPage> {
                             decoration: InputDecoration(
                               labelText: 'Duration',
                               border: OutlineInputBorder(),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
                           ),
                         ),
@@ -84,6 +92,8 @@ class _PostPageState extends State<PostPage> {
                             decoration: InputDecoration(
                               labelText: 'Period',
                               border: OutlineInputBorder(),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
                             value: selectedWorkPeriod,
                             items: ['hour', 'day', 'week', 'month'].map((String value) {
@@ -111,6 +121,8 @@ class _PostPageState extends State<PostPage> {
                             decoration: InputDecoration(
                               labelText: 'Pay Amount',
                               border: OutlineInputBorder(),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
                           ),
                         ),
@@ -120,6 +132,8 @@ class _PostPageState extends State<PostPage> {
                             decoration: InputDecoration(
                               labelText: 'Pay Period',
                               border: OutlineInputBorder(),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
                             value: selectedPayPeriod,
                             items: ['hour', 'day', 'week', 'month'].map((String value) {
@@ -143,6 +157,8 @@ class _PostPageState extends State<PostPage> {
                       decoration: InputDecoration(
                         labelText: 'Location',
                         border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.white,
                       ),
                     ),
                     SizedBox(height: 16.0),
@@ -175,7 +191,17 @@ class _PostPageState extends State<PostPage> {
                             // Post the job
                           }
                         },
-                        child: Text("Post Job"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        child: Text(
+                          "Post Job",
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
                   ],
