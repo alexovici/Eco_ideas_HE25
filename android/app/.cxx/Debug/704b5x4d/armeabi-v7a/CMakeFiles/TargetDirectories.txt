@@ -1,2 +1,0 @@
-C:/Users/alexg/AppData/Local/Temp/FirstApp/flutter_application_4/android/app/.cxx/Debug/704b5x4d/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/alexg/AppData/Local/Temp/FirstApp/flutter_application_4/android/app/.cxx/Debug/704b5x4d/armeabi-v7a/CMakeFiles/rebuild_cache.dir
