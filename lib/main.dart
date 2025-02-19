@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/home.dart';
 import 'package:flutter_application_4/inbox.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_application_4/info.dart';
 import 'package:flutter_application_4/post.dart';
 import 'package:flutter_application_4/profile.dart';
 import 'package:flutter_application_4/search.dart';
+
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -44,7 +44,7 @@ class _RootPageState extends State<RootPage> {
               MaterialPageRoute(
                 builder: (BuildContext context) {
               return DespreNoi();
-            })); 
+            }));
           }, icon: Icon(Icons.info))
         ],
         ),
@@ -57,7 +57,7 @@ class _RootPageState extends State<RootPage> {
           NavigationDestination(icon: Icon(Icons.person), label: 'profile',)
         ],
         onDestinationSelected: (int index){
-          setState(() {
+          setState((){
             currentPage = index;
           });
         },
