@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class DetaliiAnunt extends StatelessWidget {
+class DetaliiAnunt extends StatefulWidget {
   final Map<String, dynamic> post;
 
   const DetaliiAnunt({super.key, required this.post});
 
+  @override
+  _DetaliiAnuntState createState() => _DetaliiAnuntState();
+}
+
+class _DetaliiAnuntState extends State<DetaliiAnunt> {
+  final TextEditingController _descriptionController = TextEditingController();
+  final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+
   Future<String?> getUserIdFromPost(String postTitle) async {
-    final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
     final DataSnapshot snapshot = await databaseReference.child(postTitle).child('userid').get();
     if (snapshot.exists) {
       return snapshot.value as String?;
@@ -17,12 +25,9 @@ class DetaliiAnunt extends StatelessWidget {
   }
 
   void applyForJob(BuildContext context) async {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
-      final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
-
       // Get the userId of the post publisher
-      final postUserId = await getUserIdFromPost(post['title']);
+      final postUserId = await getUserIdFromPost(widget.post['title']);
       if (postUserId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to retrieve post publisher information.')),
@@ -39,7 +44,7 @@ class DetaliiAnunt extends StatelessWidget {
       }
 
       // Check if the user has already applied
-      final applicantsRef = databaseReference.child(post['title']).child('applicants');
+      final applicantsRef = databaseReference.child(widget.post['title']).child('applicants');
       final snapshot = await applicantsRef.orderByChild('userId').equalTo(userId).once();
       if (snapshot.snapshot.value != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -48,8 +53,11 @@ class DetaliiAnunt extends StatelessWidget {
         return;
       }
 
-      // Apply for the job
-      applicantsRef.push().set({'userId': userId}).then((_) {
+      // Apply for the job with user description
+      applicantsRef.push().set({
+        'userId': userId,
+        'description': _descriptionController.text,
+      }).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Applied for the job successfully!')),
         );
@@ -69,7 +77,7 @@ class DetaliiAnunt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(post['title']),
+        title: Text(widget.post['title']),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -77,17 +85,30 @@ class DetaliiAnunt extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              post['title'],
+              widget.post['title'],
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 10.0),
-            Text('Description: ${post['description']}'),
-            Text('Pay: ${post['pay']} / ${post['payPeriod']}'),
-            Text('Duration: ${post['duration']} ${post['workPeriod']}(s)'),
-            Text('Location: ${post['location']}'),
+            Text('Description: ${widget.post['description']}'),
+            Text('Pay: ${widget.post['pay']} / ${widget.post['payPeriod']}'),
+            Text('Duration: ${widget.post['duration']} ${widget.post['workPeriod']}(s)'),
+            Text('Location: ${widget.post['location']}'),
+            Text('What makes you the right fit for this job?',
+            style: TextStyle(
+              fontSize: 20.0,
+            ),),
+            SizedBox(height: 20.0),
+            TextField(
+              controller: _descriptionController,
+              maxLines: 5, // Set the maximum number of lines to make the textbox bigger
+              decoration: InputDecoration(
+                labelText: 'Enter your description',
+                border: OutlineInputBorder(),
+              ),
+            ),
             SizedBox(height: 20.0),
             Center(
               child: ElevatedButton(
