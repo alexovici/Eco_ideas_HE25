@@ -50,7 +50,7 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       appBar: AppBar( 
         backgroundColor: Colors.green,
-        title: Text('Muncitor pe loc',
+        title: Text('NeedaHand',
         style: TextStyle(
           color: Colors.white,
           fontSize: 22.0,

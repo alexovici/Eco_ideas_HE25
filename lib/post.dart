@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -30,6 +31,7 @@ class _PostPageState extends State<PostPage> {
   final payController = TextEditingController();
   final durationController = TextEditingController();
   final locationController = TextEditingController();
+  final userId = FirebaseAuth.instance.currentUser?.uid;
   String? selectedPayPeriod;
   String? selectedWorkPeriod;
 
@@ -43,6 +45,7 @@ class _PostPageState extends State<PostPage> {
     String location = locationController.text;
     String payPeriod = selectedPayPeriod ?? '';
     String workPeriod = selectedWorkPeriod ?? '';
+    final user = userId ?? '';
     bool selected = false;
 
     Map<String, dynamic> jobDetails = {
@@ -53,6 +56,7 @@ class _PostPageState extends State<PostPage> {
       'payPeriod': payPeriod,
       'workPeriod': workPeriod,
       'selected': selected,
+      'userid': user,
     };
 
     databaseReference.child(title).set(jobDetails).then((_) {
@@ -154,7 +158,7 @@ class _PostPageState extends State<PostPage> {
                             }).toList(),
                             onChanged: (newValue) {
                               setState(() {
-                                selectedPayPeriod = newValue;
+                                selectedWorkPeriod = newValue;
                               });
                             },
                           ),
