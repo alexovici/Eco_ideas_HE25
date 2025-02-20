@@ -43,6 +43,7 @@ class _PostPageState extends State<PostPage> {
     String location = locationController.text;
     String payPeriod = selectedPayPeriod ?? '';
     String workPeriod = selectedWorkPeriod ?? '';
+    bool selected = false;
 
     Map<String, dynamic> jobDetails = {
       'description': description,
@@ -51,6 +52,7 @@ class _PostPageState extends State<PostPage> {
       'location': location,
       'payPeriod': payPeriod,
       'workPeriod': workPeriod,
+      'selected': selected,
     };
 
     databaseReference.child(title).set(jobDetails).then((_) {

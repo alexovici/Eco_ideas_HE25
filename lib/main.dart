@@ -6,8 +6,8 @@ import 'package:flutter_application_4/info.dart';
 import 'package:flutter_application_4/post.dart';
 import 'package:flutter_application_4/profile.dart';
 import 'package:flutter_application_4/search.dart';
-import 'package:flutter_application_4/login.dart';
 import 'firebase_options.dart'; // Ensure this file is generated
+import 'auth_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: AuthGate(),
     );
   }
 }
