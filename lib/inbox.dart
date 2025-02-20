@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_application_4/selectie.dart';
 
 class InboxPage extends StatefulWidget {
   const InboxPage({super.key});
@@ -24,7 +25,7 @@ class _InboxPageState extends State<InboxPage> {
   void fetchJobs() async {
     if (userId != null) {
       // Fetch jobs posted by me
-      final postedJobsSnapshot = await databaseReference.orderByChild('user').equalTo(userId).once();
+      final postedJobsSnapshot = await databaseReference.orderByChild('userid').equalTo(userId).once();
       final postedJobsData = postedJobsSnapshot.snapshot.value as Map<dynamic, dynamic>? ?? {};
       final List<Map<String, dynamic>> loadedPostedJobs = [];
       postedJobsData.forEach((key, value) {
@@ -82,23 +83,34 @@ class _InboxPageState extends State<InboxPage> {
                       itemBuilder: (context, index) {
                         final job = jobsPostedByMe[index];
                         final applicants = job['applicants'] as Map<dynamic, dynamic>;
-                        return Card(
-                          margin: EdgeInsets.all(10.0),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  job['title'],
-                                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 5.0),
-                                Text('Applicants:'),
-                                ...applicants.values.map((applicant) {
-                                  return Text(applicant['userId']);
-                                }).toList(),
-                              ],
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context){
+                                  return SelectiePage(jobTitle: job['title']);
+                                }
+                              ),
+                            );
+                          },
+                          child: Card(
+                            margin: EdgeInsets.all(10.0),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    job['title'],
+                                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Text('Applicants:'),
+                                  ...applicants.values.map((applicant) {
+                                    return Text(applicant['userId']);
+                                  }).toList(),
+                                ],
+                              ),
                             ),
                           ),
                         );

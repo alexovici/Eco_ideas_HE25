@@ -7,13 +7,31 @@ class DetaliiAnunt extends StatelessWidget {
 
   const DetaliiAnunt({super.key, required this.post});
 
+  Future<String?> getUserIdFromPost(String postTitle) async {
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
+    final DataSnapshot snapshot = await databaseReference.child(postTitle).child('userid').get();
+    if (snapshot.exists) {
+      return snapshot.value as String?;
+    }
+    return null;
+  }
+
   void applyForJob(BuildContext context) async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
       final DatabaseReference databaseReference = FirebaseDatabase.instance.refFromURL('https://muncitor-pe-loc-default-rtdb.europe-west1.firebasedatabase.app/Posts');
 
+      // Get the userId of the post publisher
+      final postUserId = await getUserIdFromPost(post['title']);
+      if (postUserId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to retrieve post publisher information.')),
+        );
+        return;
+      }
+
       // Check if the user is the publisher
-      if (post['user'] == userId) {
+      if (postUserId == userId) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('You cannot apply for your own job post.')),
         );
